@@ -16,9 +16,6 @@
 #define OPTIONS 1 
 #define EXIT 2
 
-#define hide_cursor() std::cout << "\e[?25l\n"
-#define show_cursor() std::cout << "\e[?25h\n"
-
 #define BOARD_SIZE 9
 #define MAP_MOVE(x) (x - 1)
 

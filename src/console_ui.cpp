@@ -6,7 +6,7 @@ void ConsoleUI::GameMenu(GAMESTATE &state, bool& isRunning)
  {
     ConsoleUI::clearConsole();
     int flag = -1;
-    hide_cursor();
+    ConsoleUI::hideCursor();
     int x, y;
     x = y = 0;
     ConsoleUI::getConsoleMetrics(x, y);
@@ -19,11 +19,21 @@ void ConsoleUI::GameMenu(GAMESTATE &state, bool& isRunning)
                 state = GAMESTATE::PLAYING; break;
             case EXIT: {
                 ConsoleUI::clearConsole();
-                show_cursor();
+                ConsoleUI::showCursor();
                 isRunning = false;
             }break;
         }
     }
+}
+
+void ConsoleUI::showCursor() 
+{
+    std::cout << "\e[?25h\n";
+}
+
+void ConsoleUI::hideCursor() 
+{
+    std::cout << "\e[?25l\n";
 }
 
 void ConsoleUI::setMenuColors(WORD flag)

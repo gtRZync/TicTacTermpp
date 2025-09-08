@@ -10,6 +10,8 @@ class ConsoleUI final {
         ~ConsoleUI() { }
     public:
         static void GameMenu(GAMESTATE& state, bool& isRunning);
+        static void showCursor();
+        static void hideCursor();
     private:
         static void setMenuColors(WORD flag);
         static void getConsoleMetrics(int &width, int &height);
