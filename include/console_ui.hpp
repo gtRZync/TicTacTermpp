@@ -1,10 +1,23 @@
 #pragma once
 #include "config.hpp"
 
+enum class ConsoleColor {
+    Default,
+    TextGray_BGBlue,
+    TextBlack_BGWhite,
+    RED,
+    BLUE,
+};
+
 class ConsoleUI final {
     private:
-        static const WORD flags = BACKGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+    #ifdef _WIN32
         static const HANDLE hConsole;
+        static WORD _w32getConsoleAttributes();
+        static WORD _w32getWinColorAttribute(ConsoleColor color);
+        static const WORD saved_attributes;
+    #endif
+        using ConsoleHandle = void *;
     public:
         ConsoleUI() { }
         ~ConsoleUI() { }
@@ -12,10 +25,13 @@ class ConsoleUI final {
         static void GameMenu(GAMESTATE& state, bool& isRunning);
         static void showCursor();
         static void hideCursor();
-    private:
-        static void setMenuColors(WORD flag);
-        static void getConsoleMetrics(int &width, int &height);
+        static void setColor(ConsoleColor color);
+        static void resetColor();
         static void clearConsole();
-        static void setCursorPosition(short cx, short cy);
-        static int showMenu(int cx, int cy);
+    private:
+        static std::string  getAnsiEscapeSequence(ConsoleColor color);
+        static void         getConsoleMetrics(int &width, int &height);
+        static void         setCursorPosition(short cx, short cy);
+        static int          showMenu(int cx, int cy);
+        static void         drawBox(int posx, int posy, int box_width, int box_height);
 };

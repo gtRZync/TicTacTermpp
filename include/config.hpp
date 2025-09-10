@@ -17,7 +17,6 @@
 #define EXIT 2
 
 #define BOARD_SIZE 9
-#define MAP_MOVE(x) (x - 1)
 
 inline void map_move(int &move) {
     if( move >= 1 && move <= 9) {
