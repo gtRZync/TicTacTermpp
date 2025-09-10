@@ -62,19 +62,19 @@ make run
 
 ---
 
-##  Screenshots 
+##  Images 
 
-| Start Screen                                                                                |
+| Start Screen                                                                        |
 |-------------------------------------------------------------------------------------|
-| ![Menu](screenshots/menu.png)                                                        |
+| ![Menu](images/menu.png)                                                            |
 ---------------------------------------------------------------------------------------
 | Game in progress                           |  Tie                                   |
 |--------------------------------------------|----------------------------------------|
-| ![GameProgress](screenshots/game.png)      | ![Tie](screenshots/tie.png)            |
+| ![GameProgress](images/game.png)           | ![Tie](images/tie.png)                 |
 ---------------------------------------------------------------------------------------
 | Victory                                    | Defeat                                 |
 |--------------------------------------------|----------------------------------------|
-| ![Victory](screenshots/victory.png)        | ![Defeat](screenshots/defeat.png)      |
+| ![Victory](images/victory.png)             | ![Defeat](images/defeat.png)           |
 
 
 ---
