@@ -7,6 +7,7 @@ enum class ConsoleColor {
     TextBlack_BGWhite,
     RED,
     BLUE,
+    YELLOW,
 };
 
 class ConsoleUI final {

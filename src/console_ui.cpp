@@ -67,10 +67,13 @@ void ConsoleUI::setColor(ConsoleColor color) {
                 SetConsoleTextAttribute(ConsoleUI::hConsole, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0);
             break;
             case ConsoleColor::RED:
-                SetConsoleTextAttribute(ConsoleUI::hConsole, FOREGROUND_RED);
+                SetConsoleTextAttribute(ConsoleUI::hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
             break;
             case ConsoleColor::BLUE:
-                SetConsoleTextAttribute(ConsoleUI::hConsole, FOREGROUND_BLUE);
+                SetConsoleTextAttribute(ConsoleUI::hConsole, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+            break;
+            case ConsoleColor::YELLOW:
+                SetConsoleTextAttribute(ConsoleUI::hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
             break;
         }
     }
@@ -90,6 +93,9 @@ void ConsoleUI::setColor(ConsoleColor color) {
             break;
             case ConsoleColor::BLUE:
                 std::cout << "\033[1;34m";
+            break;
+            case ConsoleColor::YELLOW:
+                std::cout << "\033[1;33m";
             break;
         }
     }

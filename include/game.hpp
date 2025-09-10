@@ -11,8 +11,9 @@ class TicTacToe {
         const char ai = 'O';
         std::array<char, BOARD_SIZE> board;
         std::array<int, BOARD_SIZE> alreadyPlayed;
+        std::array<char*, 3> winningLine{}; 
         bool running = true;
-        char winner = ' ';
+        char winner = 'w';
 
     public:
         TicTacToe() {
@@ -25,14 +26,16 @@ class TicTacToe {
         void play();
 
     private:
-        bool isTie();
-        bool checkWin();
-        void makeMove();
-        void AIMove();
-        void victory();
-        void displayBoard();
-        inline void populateBoard();
-        inline void setPlayed(int move);
-        inline int getRandMinMax(int min, int max);
-        static inline bool isWinningLine(const char& a, const char& b, const char& c, const char& who);
+        static inline bool  isWinningLine(const char& a, const char& b, const char& c, const char& who);
+        bool         isInWinningLine(const char *line) const;
+        inline void         populateBoard();
+        inline void         setPlayed(int move);
+        inline int          getRandMinMax(int min, int max);
+        bool                isTie() const;
+        bool                checkWin();
+        void                makeMove();
+        void                AIMove();
+        void                victory();
+        void                displayBoard();
+        void                printColoredCell(char& cell);
 };

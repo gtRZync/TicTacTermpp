@@ -21,22 +21,50 @@ inline void TicTacToe::setPlayed(int move) {
 
 void TicTacToe::displayBoard()
 {
-    //TODO : Make the board bigger and  center it
-    std::system("cls");
+    //TODO: Make the board bigger and  center it
+    ConsoleUI::clearConsole();
     std::cout << TicTacToeTexts::tictactoeText << "\n";
-    for(std::size_t i = 0 ; i < BOARD_SIZE ; i+=3 )
+
+    for(std::size_t i = 0 ; i < board.size() ; i += 3)
     {
         std::cout << "          ██          ██     " << '\n';
         std::cout << "          ██          ██     " << '\n';
-        std::cout << "    " << board[i] << "     ██    " << board[i + 1] << "     ██    " << board[i + 2] << "  " << '\n';
+
+        
+        std::cout << "    ";
+        printColoredCell(board[i]);
+        std::cout << "     ██    ";
+        printColoredCell(board[i + 1]);
+        std::cout << "     ██    ";
+        printColoredCell(board[i + 2]);
+        std::cout << "  " << '\n';
+
+
         std::cout << "          ██          ██     " << '\n';
         std::cout << "          ██          ██     " << '\n';
+
         std::cout << ((i < 6) ? "▇▇▇▇▇▇▇▇▇▇██▇▇▇▇▇▇▇▇▇▇██▇▇▇▇▇▇▇▇▇▇" : "" ) << '\n';    
     }
 }
 
+
+void TicTacToe::printColoredCell(char &cell)
+{
+    if(isInWinningLine(&cell)) {
+        ConsoleUI::setColor(ConsoleColor::YELLOW);   
+    }else if (cell == player) {
+        ConsoleUI::setColor(ConsoleColor::BLUE);  
+    } else if (cell == ai) {
+        ConsoleUI::setColor(ConsoleColor::RED);   
+    }
+
+    std::cout << cell;
+    ConsoleUI::resetColor();
+}
+
+
 inline void TicTacToe::populateBoard() {
-    for(std::size_t i = 0 ; i < BOARD_SIZE ; i++) {
+    for(std::size_t i = 0 ; i < board.size() ; i++) {
         board.at(i) = ' ';
     }
 }
@@ -46,8 +74,16 @@ inline bool TicTacToe::isWinningLine(const char &a, const char &b, const char &c
     return a == who && b == who && c == who;
 }
 
-bool TicTacToe::isTie() {
-    for(std::size_t i = 0 ; i < BOARD_SIZE ; i++) {
+bool TicTacToe::isInWinningLine(const char* ptr) const {
+    for (auto* winPtr : winningLine) {
+        if (winPtr == ptr)
+            return true;
+    }
+    return false;
+} 
+
+bool TicTacToe::isTie() const{
+    for(std::size_t i = 0 ; i < board.size() ; i++) {
         if(board.at(i) == ' ') {
             return false;
         }
@@ -56,28 +92,38 @@ bool TicTacToe::isTie() {
 }
 
 bool TicTacToe::checkWin() {
-    for(std::size_t row = 0 ; row < BOARD_SIZE ; row+=3) {
+    for(std::size_t row = 0 ; row < board.size() ; row+=3) {
         if(isWinningLine(board.at(row), board.at(row + 1), board.at(row + 2), player) 
         || isWinningLine(board.at(row), board.at(row + 1), board.at(row + 2), ai))
           {
             winner = board.at(row);
+            winningLine = {&board.at(row), &board.at(row + 1), &board.at(row + 2)};
             return true;
-          }
+        }
     }
-    for(std::size_t col = 0 ; col < BOARD_SIZE / 3 ; col++) {
+    for(std::size_t col = 0 ; col < board.size() / 3 ; col++) {
         if(isWinningLine(board.at(col), board.at(col + 3), board.at(col + 6), player) 
         || isWinningLine(board.at(col), board.at(col + 3), board.at(col + 6), ai))
-          {
+        {
             winner = board.at(col);
+            winningLine = {&board.at(col), &board.at(col + 3), &board.at(col + 6)};
             return true;
           }
     }
+
     if( isWinningLine(board.at(2), board.at(4), board.at(6), player) || 
-        isWinningLine(board.at(2), board.at(4), board.at(6), ai)     ||
-        isWinningLine(board.at(0), board.at(4), board.at(8), player) || 
+        isWinningLine(board.at(2), board.at(4), board.at(6), ai))
+        {
+            winner = board.at(4); //? index 4 is the common of all
+            winningLine = {&board.at(2), &board.at(4), &board.at(6)};
+            return true;
+        }
+
+    if( isWinningLine(board.at(0), board.at(4), board.at(8), player) || 
         isWinningLine(board.at(0), board.at(4), board.at(8), ai))
         {
             winner = board.at(4); //? index 4 is the common of all
+            winningLine = {&board.at(0), &board.at(4), &board.at(8)};
             return true;
         }
     return false;
