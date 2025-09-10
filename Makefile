@@ -1,5 +1,15 @@
 CC := g++ -std=c++17
-CCFLAGS := -O3 -Wall -Iinclude -s
+
+MODE ?= release
+
+DEBUG_CCFLAGS := -g -O0 -Wall -Iinclude
+RELEASE_CCFLAGS := -O2 -Wall -Iinclude -s
+
+ifeq ($(MODE), debug)
+    CCFLAGS := $(DEBUG_CCFLAGS)
+else
+    CCFLAGS := $(RELEASE_CCFLAGS)
+endif
 LDFLAGS := -lkernel32 -luser32
 
 .PHONY: clean all run
