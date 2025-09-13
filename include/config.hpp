@@ -7,6 +7,8 @@
 #include <type_traits>
 #include <iostream>
 #include "arts.hpp"
+#include <chrono>
+#include <thread>
 
 #define ARROW_UP (((DWORD)(0x8)<<3)|((0x32)>>2&(~0x4))) 
 #define ARROW_DOWN (((0x8)<<3)|((DWORD)(0x32)>>1&(~(0x8 | 0x1))))
@@ -39,17 +41,25 @@ enum class OSType {
     MAC_OS,
 };
 
+template<bool B>
+static constexpr bool static_assert_false = B;
+
 #ifdef _WIN32
     static constexpr OSType os = OSType::WINDOWS_NT;
 #elif __linux__
     static constexpr OSType os = OSType::LINUX;
 #elif __APPLE__
     static constexpr OSType os = OSType::MAC_OS;
+#else 
+    static_assert(static_assert_false<false>, "Unsupported platform");
 #endif
 
 struct OS {
     static constexpr inline OSType getType() {
         return os; 
+    }
+    static void sleep(int milliseconds) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
     }
 };
 
