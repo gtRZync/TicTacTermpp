@@ -10,7 +10,6 @@ ifeq ($(MODE), debug)
 else
     CCFLAGS := $(RELEASE_CCFLAGS)
 endif
-LDFLAGS := -lkernel32 -luser32
 
 .PHONY: clean all run
 
@@ -22,10 +21,10 @@ OUT := bin/tictactoe.exe
 all: $(OUT)
 
 build/%.o : src/%.cpp | build
-	$(CC) $(CCFLAGS) -c $< -o $@ $(LDFLAGS)
+	$(CC) $(CCFLAGS) -c $< -o $@
 
 $(OUT) : $(OBJS) | bin
-	$(CC) $(CCFLAGS) $(OBJS) -o $(OUT) $(LDFLAGS)
+	$(CC) $(CCFLAGS) $(OBJS) -o $(OUT)
 
 build:
 	if not exist build mkdir build
