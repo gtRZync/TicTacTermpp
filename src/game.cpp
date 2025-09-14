@@ -32,11 +32,11 @@ void TicTacToe::displayBoard()
 
         
         std::cout << "    ";
-        printColoredCell(board[i]);
+        printColoredCell(board.at(i));
         std::cout << "     ██    ";
-        printColoredCell(board[i + 1]);
+        printColoredCell(board.at(i + 1));
         std::cout << "     ██    ";
-        printColoredCell(board[i + 2]);
+        printColoredCell(board.at(i + 2));
         std::cout << "  " << '\n';
 
 
