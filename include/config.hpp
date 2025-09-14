@@ -3,6 +3,10 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <conio.h>
+#elif defined(__linux__) || defined(__APPLE__)
+    #include <termios.h>
+    #include <sys/ioctl.h>
+    #include <unistd.h>
 #endif
 #include <type_traits>
 #include <iostream>
@@ -58,7 +62,7 @@ struct OS {
     static constexpr inline OSType getType() {
         return os; 
     }
-    static void sleep(int milliseconds) {
+    static void sleep(unsigned int milliseconds) {
         std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
     }
 };

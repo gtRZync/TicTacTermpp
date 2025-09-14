@@ -172,8 +172,7 @@ int ConsoleUI::showMenu(int cx, int cy)
                     return highlight;
             }
         }
-
-        Sleep(35); // small delay for smoother experience
+        OS::sleep(35);
     }
     return 0;
 }
